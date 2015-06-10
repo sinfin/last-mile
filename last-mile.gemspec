@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'last_mile/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "last_mile"
+  spec.name          = "last-mile"
   spec.version       = LastMile::VERSION
   spec.authors       = ["Jakub Hozak"]
   spec.email         = ["jakub.hozak@gmail.com"]
