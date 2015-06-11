@@ -2,8 +2,8 @@ module LastMile::Utils
   def run_locally(cmd,opts = {})
     puts cmd
 
-    if opts[:confirm]
-      return unless agree("Execute? ")
+    if question = opts[:confirm]
+      return unless agree(question)
     end
     
     unless system(cmd)

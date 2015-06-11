@@ -4,6 +4,12 @@ require 'droplet_kit'
 
 module LastMile::DigitalOcean
 
+
+  def droplet_config
+    @droplet_config ||= YAML.load_file(do_config_path)
+  end
+
+
   # FIXME: update image_id
   def create_droplet(name, image_id = 11397076)
     client = DropletKit::Client.new(access_token: token)
@@ -34,16 +40,25 @@ module LastMile::DigitalOcean
       droplet = client.droplets.find(id: droplet.id)
     end
 
-    droplet_conf = {}
-    droplet_conf[:ipv4] = droplet.networks.v4.first.ip_address
-    droplet_conf[:ipv6] = droplet.networks.v6.first.ip_address
-    droplet_conf[:domain] = name
+    droplet_conf = {
+      ipv4: 'TODO',
+      ipv4_private: droplet.networks.v4.first.ip_address,
+      ipv6: droplet.networks.v6.first.ip_address,
+      domain: name
+    }
 
     # TODO Setup private network
 
     # Write down conf
-    File.open("config/droplet.yml", 'w') { |f| YAML.dump(droplet_conf, f) }
-    puts "Done! Please check the file config/droplet.yml"
-
+    File.open(do_config_path, 'w') { |f| YAML.dump(droplet_conf, f) }
+    system "cat #{do_config_path}"
+    puts "Done and written to #{do_config_path}!"
   end
+
+  private
+  
+  def do_config_path
+    "config/deploy/#{rails_env}/droplet.yml"
+  end
+
 end
