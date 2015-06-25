@@ -29,7 +29,7 @@ Please, do this manually:
 ------------------------------
 *) Login to DB machine as `postgres` user
 
-  ssh root@db1.sinfin.io
+  ssh root@[db server]
   su postgres
   cd ~
 
@@ -77,6 +77,7 @@ production:
   end
 
   def foreman_upload
+    upload "config/deploy/#{rails_env}/.env", "#{deploy_to}/#{shared_path}/.env"
     Dir["./config/deploy/#{rails_env}/*"].each do |file|
       sudo_upload file, "/etc/init"
     end
