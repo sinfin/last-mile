@@ -42,13 +42,16 @@ module LastMile::DigitalOcean
     end
 
     droplet_conf = {
-      ipv4: droplet.networks.v4.first.ip_address,
-      ipv4_private: 'TODO',
       domain: name
     }
+    for address in droplet.networks.v4
+      if address.ip_address =~ /10\.*/
+        droplet_conf[:ipv4_private] = address.ip_address
+      else
+        droplet_conf[:ipv4] = address.ip_address
+      end
+    end
     droplet_conf[:ipv6] = droplet.networks.v6.first.ip_address if droplet.networks.v6.size > 0
-
-    # TODO Setup private network
 
     # Write down conf
     File.open(do_config_path, 'w') { |f| YAML.dump(droplet_conf, f) }
