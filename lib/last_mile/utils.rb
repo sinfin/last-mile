@@ -5,7 +5,7 @@ module LastMile::Utils
     if question = opts[:confirm]
       return unless agree(question)
     end
-    
+
     unless system(cmd)
       puts 'Command failed.'
       exit
@@ -17,7 +17,7 @@ module LastMile::Utils
   end
 
   def upload(local,remote)
-    run_locally "rsync #{local} #{user}@#{domain}:#{remote}"
+    run_locally "rsync #{local} #{user}@#{droplet_config.fetch(:ipv4)}:#{remote}"
   end
 
 
