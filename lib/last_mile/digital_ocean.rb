@@ -12,11 +12,12 @@ module LastMile::DigitalOcean
 
   # FIXME: update image_id
   def create_droplet(name, image_id = 11397076)
-    client = DropletKit::Client.new(access_token: token)
 
     unless token = ENV.fetch("DIGITAL_OCEAN_TOKEN")
       raise "Missing DIGITAL_OCEAN_TOKEN in the environment"
     end
+
+    client = DropletKit::Client.new(access_token: token)
 
     if client.droplets.all.find { |droplet| droplet.name == name }
       puts "Droplet already exists."
@@ -41,11 +42,11 @@ module LastMile::DigitalOcean
     end
 
     droplet_conf = {
-      ipv4: 'TODO',
-      ipv4_private: droplet.networks.v4.first.ip_address,
-      ipv6: droplet.networks.v6.first.ip_address,
+      ipv4: droplet.networks.v4.first.ip_address,
+      ipv4_private: 'TODO',
       domain: name
     }
+    droplet_conf[:ipv6] = droplet.networks.v6.first.ip_address if droplet.networks.v6.size > 0
 
     # TODO Setup private network
 
@@ -56,7 +57,7 @@ module LastMile::DigitalOcean
   end
 
   private
-  
+
   def do_config_path
     "config/deploy/#{rails_env}/droplet.yml"
   end
