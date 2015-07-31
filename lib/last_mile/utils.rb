@@ -13,11 +13,11 @@ module LastMile::Utils
   end
 
   def sudo_upload(local,remote)
-    run_locally "rsync --rsync-path=\"sudo rsync\" #{local} #{user}@#{domain}:#{remote}"
+    run_locally "rsync -e 'ssh -p #{port}' --rsync-path=\"sudo rsync\" #{local} #{user}@#{domain}:#{remote}"
   end
 
   def upload(local,remote)
-    run_locally "rsync #{local} #{user}@#{droplet_config.fetch(:ipv4)}:#{remote}"
+    run_locally "rsync -e 'ssh -p #{port}' #{local} #{user}@#{droplet_config.fetch(:ipv4)}:#{remote}"
   end
 
 
