@@ -17,7 +17,7 @@ module LastMile::Utils
   end
 
   def upload(local,remote)
-    run_locally "rsync -e 'ssh -p #{port}' #{local} #{user}@#{droplet_config.fetch(:ipv4)}:#{remote}"
+    run_locally "rsync -e 'ssh -p #{port}' #{local} #{user}@#{domain}:#{remote}"
   end
 
 
