@@ -13,10 +13,12 @@ module LastMile::Utils
   end
 
   def sudo_upload(local,remote)
+    port = 22 unless port
     run_locally "rsync -e 'ssh -p #{port}' --rsync-path=\"sudo rsync\" #{local} #{user}@#{domain}:#{remote}"
   end
 
   def upload(local,remote)
+    port = 22 unless port
     run_locally "rsync -e 'ssh -p #{port}' #{local} #{user}@#{domain}:#{remote}"
   end
 
