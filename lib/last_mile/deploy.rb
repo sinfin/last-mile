@@ -6,10 +6,9 @@ module LastMile::Deploy
   include LastMile::Utils
 
   def create_shared_dir(name)
-    # FIXME: vytvoření adresářů (souborů) od doby odsunutí do last mile nefunguje (nic neudělá)
-    puts queue! %[mkdir -p "#{deploy_to}/#{shared_path}"]
-    puts queue! %[mkdir -p "#{deploy_to}/#{shared_path}/#{name}"]
-    puts queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/#{name}"]
+    queue! %[mkdir -p "#{deploy_to}/#{shared_path}"]
+    queue! %[mkdir -p "#{deploy_to}/#{shared_path}/#{name}"]
+    queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/#{name}"]
   end
 
   def create_shared_file(file)
