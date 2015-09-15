@@ -49,9 +49,9 @@ Please, do this manually:
 
 *) Test it from droplet by
 
-  psql -d #{db} -h #{private_ip} -U #{db_user} -W
+  psql -d #{db} -h [db server] -U #{db_user} -W
 
-*) Setup connection in config/deploy/production/database.yml and use 'mina setup' to upload it:
+*) Setup connection in config/deploy/production/database.yml 
 
 production:
   adapter: postgresql
@@ -64,6 +64,11 @@ production:
   min_messages: warning
   pool: 2
   timeout: 5000
+
+*) and upload it:
+
+  mina #{rails_env} install:env
+
 
 }
   end
