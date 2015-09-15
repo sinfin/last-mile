@@ -6,9 +6,10 @@ module LastMile::Deploy
   include LastMile::Utils
 
   def create_shared_dir(name)
-    queue! %[mkdir -p "#{deploy_to}/#{shared_path}"]
-    queue! %[mkdir -p "#{deploy_to}/#{shared_path}/#{name}"]
-    queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/#{name}"]
+    puts "Creating shared dir #{name}"
+    capture %[mkdir -p "#{deploy_to}/#{shared_path}"]
+    capture %[mkdir -p "#{deploy_to}/#{shared_path}/#{name}"]
+    capture %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/#{name}"]
   end
 
   def create_shared_file(file)
