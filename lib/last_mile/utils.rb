@@ -22,6 +22,11 @@ module LastMile::Utils
     run_locally "rsync -e 'ssh -p #{port}' #{local} #{user}@#{domain}:#{remote}"
   end
 
+  def download(remote,local)
+    port = 22 unless port
+    run_locally "rsync -e 'ssh -p #{port}' #{user}@#{domain}:#{remote} #{local}"
+  end
+
 
 
 end
