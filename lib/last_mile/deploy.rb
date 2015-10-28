@@ -51,7 +51,7 @@ Please, do this manually:
 
   psql -d #{db} -h [db server] -U #{db_user} -W
 
-*) Setup connection in config/deploy/production/database.yml 
+*) Setup connection in config/deploy/production/database.yml
 
 production:
   adapter: postgresql
@@ -82,10 +82,10 @@ production:
     run_locally "chmod 600 #{dir}/*.conf"
   end
 
-  def foreman_upload
-    upload "config/deploy/#{rails_env}/.env", "#{deploy_to}/#{shared_path}/.env"
+  def foreman_upload(port=22)
+    upload "config/deploy/#{rails_env}/.env", "#{deploy_to}/#{shared_path}/.env", port
     Dir["./config/deploy/#{rails_env}/*"].each do |file|
-      sudo_upload file, "/etc/init"
+      sudo_upload file, "/etc/init", port
     end
   end
 
