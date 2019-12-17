@@ -77,8 +77,8 @@ production:
     app_root = "/home/#{user}/#{appname}/current"
     dir = "./config/deploy/#{rails_env}"
     run_locally "mkdir -p #{dir}"
-    puts "foreman export upstart #{dir} -a #{appname} --root #{app_root} --procfile ./Procfile -u #{user} --env #{dir}/.env"
-    run_locally "foreman export upstart #{dir} -a #{appname} --root #{app_root} --procfile ./Procfile -u #{user} --env #{dir}/.env"
+    puts "foreman export systemd #{dir} -a #{appname} --root #{app_root} --procfile ./Procfile -u #{user} --env #{dir}/.env"
+    run_locally "foreman export systemd #{dir} -a #{appname} --root #{app_root} --procfile ./Procfile -u #{user} --env #{dir}/.env"
     run_locally "chmod 600 #{dir}/*.conf"
   end
 
